@@ -118,26 +118,46 @@ export interface CarritoItem {
 }
 
 export interface PedidoPersonalizado {
-  id: number
-  cliente_id: number
+  id: string
+  cliente_id: string
   usuario_id: string | null
-  fecha_pedido: string
-  fecha_entrega: string | null
+  codigo_pedido: string | null
+  tipo_pedido: string | null
   descripcion: string
-  referencia_imagen: string | null
-  anticipo: number
+  fecha_entrega: string | null
   total: number
+  adelanto: number
+  saldo: number | null
   estado: string | null
   observaciones: string | null
+  created_at: string
+  updated_at: string
 }
 
 export interface PagoPedido {
-  id: number
-  pedido_id: number
+  id: string
+  pedido_id: string
+  usuario_id: string | null
   monto: number
-  fecha_pago: string
   metodo_pago: string | null
-  referencia: string | null
+  observacion: string | null
+  created_at: string
+}
+
+export interface PedidoPersonalizadoView {
+  id: string
+  codigo_pedido: string | null
+  cliente_nombre: string | null
+  cliente_telefono: string | null
+  tipo_pedido: string | null
+  descripcion: string
+  fecha_entrega: string | null
+  total: number
+  adelanto: number
+  saldo: number | null
+  estado: string | null
+  observaciones: string | null
+  created_at: string
 }
 
 export interface MovimientoInventario {
