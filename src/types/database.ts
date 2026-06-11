@@ -101,13 +101,27 @@ export interface PagoPedido {
 }
 
 export interface MovimientoInventario {
-  id: number
-  producto_id: number
+  id: string
+  producto_id: string
+  usuario_id: string | null
   tipo: string
   cantidad: number
-  motivo: string | null
-  usuario_id: string | null
-  fecha: string
+  stock_anterior: number | null
+  stock_nuevo: number | null
+  referencia_tipo: string | null
+  referencia_id: string | null
+  observacion: string | null
+  created_at: string
+}
+
+export interface InventarioView {
+  id: string
+  codigo: string | null
+  nombre: string
+  categoria_nombre: string | null
+  stock_actual: number
+  stock_minimo: number
+  estado_inventario: string | null
 }
 
 export interface DashboardResumen {
