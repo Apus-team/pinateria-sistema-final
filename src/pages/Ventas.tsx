@@ -243,8 +243,6 @@ export default function Ventas() {
       observaciones: observaciones.trim() || null,
     }
 
-    console.log('Payload venta:', ventaPayload)
-
     const { data: ventaInsert, error: ventaError } = await supabase
       .from('ventas')
       .insert(ventaPayload)
@@ -265,8 +263,6 @@ export default function Ventas() {
       cantidad: item.cantidad,
       precio_unitario: item.precio_unitario,
     }))
-
-    console.log('Payload detalles:', detallesPayload)
 
     const { error: detalleError } = await supabase
       .from('detalle_ventas')
