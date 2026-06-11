@@ -1,0 +1,202 @@
+export interface Perfil {
+  id: string
+  nombre: string | null
+  telefono: string | null
+  rol: string | null
+  estado: string | null
+}
+
+export interface Categoria {
+  id: string
+  nombre: string
+  descripcion: string | null
+  activo: boolean
+}
+
+export interface Producto {
+  id: string
+  categoria_id: string | null
+  codigo: string | null
+  nombre: string
+  descripcion: string | null
+  precio_venta: number
+  stock_actual: number
+  stock_minimo: number
+  imagen_url: string | null
+  estado: string | null
+  activo: boolean
+  created_by?: string | null
+  created_at?: string
+  updated_at?: string
+}
+
+export interface ProductoView {
+  id: string
+  codigo: string | null
+  nombre: string
+  descripcion: string | null
+  precio_venta: number
+  stock_actual: number
+  stock_minimo: number
+  estado: string | null
+  activo: boolean
+  imagen_url: string | null
+  categoria_id: string | null
+  categoria_nombre: string | null
+}
+
+export interface Cliente {
+  id: string
+  nombre: string
+  telefono: string | null
+  email: string | null
+  direccion: string | null
+  observaciones: string | null
+  activo: boolean
+  created_by?: string | null
+  created_at?: string
+  updated_at?: string
+}
+
+export interface ClienteFrecuenteView {
+  id: string
+  nombre: string
+  telefono: string | null
+  email: string | null
+  direccion: string | null
+  activo: boolean
+  cantidad_compras: number | null
+  total_compras: number | null
+  ultima_compra: string | null
+}
+
+export interface Venta {
+  id: string
+  cliente_id: string | null
+  usuario_id: string | null
+  fecha_venta: string
+  subtotal: number
+  descuento: number
+  total: number
+  metodo_pago: string | null
+  estado: string | null
+  observaciones: string | null
+  created_at: string
+}
+
+export interface DetalleVenta {
+  id: string
+  venta_id: string
+  producto_id: string | null
+  cantidad: number
+  precio_unitario: number
+  subtotal: number | null
+  created_at: string
+}
+
+export interface HistorialVentaView {
+  id: string
+  fecha_venta: string
+  cliente_nombre: string | null
+  usuario_nombre: string | null
+  subtotal: number
+  descuento: number
+  total: number
+  metodo_pago: string | null
+  estado: string | null
+  observaciones: string | null
+}
+
+export interface CarritoItem {
+  producto_id: string
+  codigo: string | null
+  nombre: string
+  precio_unitario: number
+  cantidad: number
+  stock_disponible: number
+  subtotal: number
+}
+
+export interface PedidoPersonalizado {
+  id: string
+  cliente_id: string
+  usuario_id: string | null
+  codigo_pedido: string | null
+  tipo_pedido: string | null
+  descripcion: string
+  fecha_entrega: string | null
+  total: number
+  adelanto: number
+  saldo: number | null
+  estado: string | null
+  observaciones: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface PagoPedido {
+  id: string
+  pedido_id: string
+  usuario_id: string | null
+  monto: number
+  metodo_pago: string | null
+  observacion: string | null
+  created_at: string
+}
+
+export interface PedidoPersonalizadoView {
+  id: string
+  codigo_pedido: string | null
+  cliente_nombre: string | null
+  cliente_telefono: string | null
+  tipo_pedido: string | null
+  descripcion: string
+  fecha_entrega: string | null
+  total: number
+  adelanto: number
+  saldo: number | null
+  estado: string | null
+  observaciones: string | null
+  created_at: string
+}
+
+export interface MovimientoInventario {
+  id: string
+  producto_id: string
+  usuario_id: string | null
+  tipo: string
+  cantidad: number
+  stock_anterior: number | null
+  stock_nuevo: number | null
+  referencia_tipo: string | null
+  referencia_id: string | null
+  observacion: string | null
+  created_at: string
+}
+
+export interface InventarioView {
+  id: string
+  codigo: string | null
+  nombre: string
+  categoria_nombre: string | null
+  stock_actual: number
+  stock_minimo: number
+  estado_inventario: string | null
+}
+
+export interface DashboardResumen {
+  ventas_dia: number | null
+  total_ventas_dia: number | null
+  productos_registrados: number | null
+  productos_bajo_stock: number | null
+  pedidos_pendientes: number | null
+  clientes_registrados: number | null
+}
+
+export interface ProductoMasVendido {
+  producto_id: string
+  codigo: string | null
+  nombre: string
+  cantidad_vendida: number
+  ingreso_generado: number
+}
