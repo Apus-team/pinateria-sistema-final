@@ -186,8 +186,17 @@ export interface InventarioView {
 
 export interface DashboardResumen {
   ventas_dia: number | null
+  total_ventas_dia: number | null
   productos_registrados: number | null
   productos_bajo_stock: number | null
   pedidos_pendientes: number | null
   clientes_registrados: number | null
+}
+
+export interface ProductoMasVendido {
+  producto_id: string
+  codigo: string | null
+  nombre: string
+  cantidad_vendida: number
+  ingreso_generado: number
 }
