@@ -71,24 +71,49 @@ export interface ClienteFrecuenteView {
 }
 
 export interface Venta {
-  id: number
-  cliente_id: number | null
+  id: string
+  cliente_id: string | null
   usuario_id: string | null
   fecha_venta: string
   subtotal: number
-  impuesto: number
   descuento: number
   total: number
   metodo_pago: string | null
   estado: string | null
+  observaciones: string | null
+  created_at: string
 }
 
 export interface DetalleVenta {
-  id: number
-  venta_id: number
-  producto_id: number | null
+  id: string
+  venta_id: string
+  producto_id: string | null
   cantidad: number
   precio_unitario: number
+  subtotal: number | null
+  created_at: string
+}
+
+export interface HistorialVentaView {
+  id: string
+  fecha_venta: string
+  cliente_nombre: string | null
+  usuario_nombre: string | null
+  subtotal: number
+  descuento: number
+  total: number
+  metodo_pago: string | null
+  estado: string | null
+  observaciones: string | null
+}
+
+export interface CarritoItem {
+  producto_id: string
+  codigo: string | null
+  nombre: string
+  precio_unitario: number
+  cantidad: number
+  stock_disponible: number
   subtotal: number
 }
 
