@@ -148,8 +148,6 @@ export default function Clientes() {
       observaciones: observaciones.trim() || null,
     }
 
-    console.log('Payload cliente:', clientePayload)
-
     if (editingCliente) {
       const { error } = await supabase
         .from('clientes')

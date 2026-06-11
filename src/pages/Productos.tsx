@@ -186,8 +186,6 @@ export default function Productos() {
       activo: true,
     }
 
-    console.log("Payload producto:", productoPayload)
-
     if (editingProducto) {
       const { error } = await supabase
         .from('productos')

@@ -272,8 +272,6 @@ export default function PedidosPersonalizados() {
       observaciones: formObservaciones.trim() || null,
     }
 
-    console.log('Payload pedido:', pedidoPayload)
-
     const { data: insertData, error: insertError } = await supabase
       .from('pedidos_personalizados')
       .insert(pedidoPayload)
@@ -294,8 +292,6 @@ export default function PedidosPersonalizados() {
         metodo_pago: formMetodoPagoAdelanto,
         observacion: 'Adelanto inicial del pedido',
       }
-
-      console.log('Payload pago:', pagoPayload)
 
       const { error: pagoError } = await supabase
         .from('pagos_pedido')
@@ -342,8 +338,6 @@ export default function PedidosPersonalizados() {
       metodo_pago: pagoMetodo,
       observacion: pagoObservacion.trim() || null,
     }
-
-    console.log('Payload pago:', pagoPayload)
 
     const { error } = await supabase.from('pagos_pedido').insert(pagoPayload)
 

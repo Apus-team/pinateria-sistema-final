@@ -50,14 +50,20 @@ VITE_SUPABASE_ANON_KEY=tu-anon-key-de-supabase
 npm run dev
 ```
 
+6. Compilar para producción:
+
+```bash
+npm run build
+```
+
 ## Variables de entorno requeridas
 
-| Variable               | Descripción                  |
-| ---------------------- | ---------------------------- |
-| `VITE_SUPABASE_URL`    | URL del proyecto en Supabase |
-| `VITE_SUPABASE_ANON_KEY` | Clave anónima de Supabase  |
+| Variable                 | Descripción                  |
+| ------------------------ | ---------------------------- |
+| `VITE_SUPABASE_URL`      | URL del proyecto en Supabase |
+| `VITE_SUPABASE_ANON_KEY` | Clave anónima de Supabase    |
 
-## Flujo de módulos del sistema
+## Módulos del sistema
 
 1. **Registro** → Crear cuenta con nombre, teléfono, correo y contraseña
 2. **Inicio de sesión** → Acceder con correo y contraseña
@@ -68,8 +74,18 @@ npm run dev
 7. **Ventas** → Registro de transacciones
 8. **Pedidos personalizados** → Pedidos especiales
 9. **Reportes** → Estadísticas y reportes
-10. **Cerrar sesión** → Salir del sistema
+
+## Despliegue
+
+El proyecto está preparado para desplegarse en **Vercel**. Conectar el repositorio y definir las variables de entorno `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY` en el panel de Vercel.
+
+## Flujo GitFlow
+
+- `main` — Versión estable en producción
+- `develop` — Integración de características
+- `feature/*` — Desarrollo de funcionalidades
+- `release/*` — Estabilización previa a main
 
 ## Rama actual
 
-`feature/inicializacion-proyecto`
+`release/1.0.0`

@@ -323,8 +323,6 @@ export default function Inventario() {
       observacion: entradaObservacion.trim() || null,
     }
 
-    console.log('Movimiento inventario:', movimientoPayload)
-
     const { error: updateError } = await supabase
       .from('productos')
       .update({ stock_actual: stockNuevo, estado })
@@ -397,8 +395,6 @@ export default function Inventario() {
       observacion: ajusteObservacion.trim() || null,
     }
 
-    console.log('Movimiento inventario:', movimientoPayload)
-
     const { error: updateError } = await supabase
       .from('productos')
       .update({ stock_actual: nuevoStock, estado })
@@ -470,8 +466,6 @@ export default function Inventario() {
       referencia_id: null,
       observacion: salidaObservacion.trim() || null,
     }
-
-    console.log('Movimiento inventario:', movimientoPayload)
 
     const { error: updateError } = await supabase
       .from('productos')
