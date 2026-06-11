@@ -46,13 +46,28 @@ export interface ProductoView {
 }
 
 export interface Cliente {
-  id: number
+  id: string
   nombre: string
   telefono: string | null
   email: string | null
   direccion: string | null
   observaciones: string | null
   activo: boolean
+  created_by?: string | null
+  created_at?: string
+  updated_at?: string
+}
+
+export interface ClienteFrecuenteView {
+  id: string
+  nombre: string
+  telefono: string | null
+  email: string | null
+  direccion: string | null
+  activo: boolean
+  cantidad_compras: number | null
+  total_compras: number | null
+  ultima_compra: string | null
 }
 
 export interface Venta {
