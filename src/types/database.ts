@@ -7,15 +7,15 @@ export interface Perfil {
 }
 
 export interface Categoria {
-  id: number
+  id: string
   nombre: string
   descripcion: string | null
   activo: boolean
 }
 
 export interface Producto {
-  id: number
-  categoria_id: number | null
+  id: string
+  categoria_id: string | null
   codigo: string | null
   nombre: string
   descripcion: string | null
@@ -25,6 +25,24 @@ export interface Producto {
   imagen_url: string | null
   estado: string | null
   activo: boolean
+  created_by?: string | null
+  created_at?: string
+  updated_at?: string
+}
+
+export interface ProductoView {
+  id: string
+  codigo: string | null
+  nombre: string
+  descripcion: string | null
+  precio_venta: number
+  stock_actual: number
+  stock_minimo: number
+  estado: string | null
+  activo: boolean
+  imagen_url: string | null
+  categoria_id: string | null
+  categoria_nombre: string | null
 }
 
 export interface Cliente {
