@@ -53,7 +53,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="border-t border-gray-50 px-5 py-4 dark:border-gray-800">
-        <p className="text-center text-xs text-gray-300 dark:text-gray-600">v1.0.0</p>
+        <p className="text-center text-xs text-gray-300 dark:text-gray-600">v1.1.0</p>
       </div>
     </aside>
   )
