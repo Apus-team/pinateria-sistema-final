@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabaseClient'
-import { InventarioView, MovimientoInventario } from '../types/database'
+import type { InventarioView, MovimientoInventario } from '../types/database'
 import toast from 'react-hot-toast'
 import {
   Package,
@@ -16,6 +15,7 @@ import {
 import DataTable from '../components/DataTable'
 import FormModal from '../components/FormModal'
 import SearchInput from '../components/SearchInput'
+import PageHeader from '../components/ui/PageHeader'
 
 type ModalType = 'entrada' | 'ajuste' | 'salida' | 'movimientos' | null
 
@@ -514,13 +514,11 @@ export default function Inventario() {
   }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Gestión de Inventario</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Controla el stock actual, productos agotados y alertas de reposición.
-        </p>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Gestión de Inventario"
+        subtitle="Controla las entradas, salidas y ajustes del inventario de productos"
+      />
 
       <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
@@ -894,6 +892,6 @@ export default function Inventario() {
           </div>
         )}
       </FormModal>
-    </motion.div>
+    </div>
   )
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabaseClient'
-import {
+import type {
   Cliente,
   ProductoView,
   HistorialVentaView,
@@ -18,11 +17,15 @@ import {
   XCircle,
   Search,
   CircleCheck,
+  DollarSign,
 } from 'lucide-react'
 import DataTable from '../components/DataTable'
 import FormModal from '../components/FormModal'
 import ConfirmDialog from '../components/ConfirmDialog'
 import SearchInput from '../components/SearchInput'
+import PageHeader from '../components/ui/PageHeader'
+import MetricCard from '../components/ui/MetricCard'
+import Badge from '../components/ui/Badge'
 
 const metodosPago = [
   { value: 'efectivo', label: 'Efectivo' },
@@ -297,6 +300,10 @@ export default function Ventas() {
   // ========== HISTORIAL ==========
 
   useEffect(() => {
+    fetchHistorial()
+  }, [])
+
+  useEffect(() => {
     if (tab === 'historial') fetchHistorial()
   }, [tab])
 
@@ -497,18 +504,9 @@ export default function Ventas() {
     {
       key: 'estado',
       header: 'Estado',
-      render: (v: HistorialVentaView) =>
-        v.estado === 'completada' ? (
-          <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
-            <CircleCheck className="h-3 w-3" />
-            Completada
-          </span>
-        ) : (
-          <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
-            <XCircle className="h-3 w-3" />
-            Anulada
-          </span>
-        ),
+      render: (v: HistorialVentaView) => (
+        <Badge status={v.estado} />
+      ),
     },
     {
       key: 'acciones',
@@ -541,30 +539,15 @@ export default function Ventas() {
   // ========== RENDER ==========
 
   return (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Ventas</h1>
-        <p className="mt-1 text-sm text-gray-500">Registro de ventas y transacciones.</p>
-      </div>
+    <div className="space-y-6">
+      <PageHeader title="Ventas" subtitle="Registro de ventas y transacciones." />
 
       {/* Summary cards */}
-      <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Ventas del día</p>
-          <p className="mt-1 text-2xl font-bold text-gray-800">{summary.ventasDia}</p>
-        </div>
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Total del día</p>
-          <p className="mt-1 text-2xl font-bold text-fucsia-600">{formatCurrency(summary.totalDia)}</p>
-        </div>
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Completadas</p>
-          <p className="mt-1 text-2xl font-bold text-green-600">{summary.completadas}</p>
-        </div>
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Anuladas</p>
-          <p className="mt-1 text-2xl font-bold text-red-600">{summary.anuladas}</p>
-        </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <MetricCard icon={ShoppingCart} label="Ventas del día" value={summary.ventasDia} color="fucsia" />
+        <MetricCard icon={DollarSign} label="Total del día" value={formatCurrency(summary.totalDia)} color="green" />
+        <MetricCard icon={CircleCheck} label="Completadas" value={summary.completadas} color="green" />
+        <MetricCard icon={XCircle} label="Anuladas" value={summary.anuladas} color="red" />
       </div>
 
       {/* Tabs */}
@@ -857,15 +840,7 @@ export default function Ventas() {
               <div>
                 <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Estado</p>
                 <p className="mt-1">
-                  {detailTarget.estado === 'completada' ? (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
-                      <CircleCheck className="h-3 w-3" /> Completada
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
-                      <XCircle className="h-3 w-3" /> Anulada
-                    </span>
-                  )}
+                  <Badge status={detailTarget.estado} />
                 </p>
               </div>
             </div>
@@ -945,6 +920,6 @@ export default function Ventas() {
         confirmText="Anular venta"
         loading={anulando}
       />
-    </motion.div>
+    </div>
   )
 }

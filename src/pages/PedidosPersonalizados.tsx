@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabaseClient'
-import { PedidoPersonalizadoView, Cliente, PagoPedido } from '../types/database'
+import type { PedidoPersonalizadoView, Cliente, PagoPedido } from '../types/database'
 import toast from 'react-hot-toast'
 import {
   Plus,
@@ -9,11 +8,19 @@ import {
   Eye,
   XCircle,
   DollarSign,
+  Clock,
+  Wrench,
+  Package,
+  CheckCircle,
 } from 'lucide-react'
 import DataTable from '../components/DataTable'
 import FormModal from '../components/FormModal'
 import ConfirmDialog from '../components/ConfirmDialog'
 import SearchInput from '../components/SearchInput'
+import PageHeader from '../components/ui/PageHeader'
+import Button from '../components/ui/Button'
+import Badge from '../components/ui/Badge'
+import MetricCard from '../components/ui/MetricCard'
 
 const estadosValidos = ['pendiente', 'en_proceso', 'listo', 'entregado', 'cancelado'] as const
 
@@ -435,15 +442,6 @@ export default function PedidosPersonalizados() {
     })
   }
 
-  const EstadoBadge = ({ estado }: { estado: string | null }) => {
-    const cfg = estadoConfig[estado ?? ''] ?? { label: estado ?? '—', color: 'bg-gray-100 text-gray-600' }
-    return (
-      <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${cfg.color}`}>
-        {cfg.label}
-      </span>
-    )
-  }
-
   // ========== COLUMNS ==========
 
   const columns = [
@@ -507,7 +505,7 @@ export default function PedidosPersonalizados() {
     {
       key: 'estado',
       header: 'Estado',
-      render: (p: PedidoPersonalizadoView) => <EstadoBadge estado={p.estado} />,
+      render: (p: PedidoPersonalizadoView) => <Badge status={p.estado} />,
     },
     {
       key: 'acciones',
@@ -538,38 +536,23 @@ export default function PedidosPersonalizados() {
   // ========== RENDER ==========
 
   return (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Pedidos personalizados</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Gestiona pedidos especiales, fechas de entrega, adelantos y saldos pendientes.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={openCreate}
-          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-fucsia-500 to-morado-600 px-4 py-2.5 text-sm font-medium text-white shadow-md shadow-fucsia-200 transition-all hover:from-fucsia-600 hover:to-morado-700"
-        >
-          <Plus className="h-4 w-4" />
+    <div className="space-y-6">
+      <PageHeader
+        title="Pedidos personalizados"
+        subtitle="Gestiona pedidos especiales, fechas de entrega, adelantos y saldos pendientes."
+      >
+        <Button icon={<Plus className="h-4 w-4" />} onClick={openCreate}>
           Nuevo pedido
-        </button>
-      </div>
+        </Button>
+      </PageHeader>
 
       {/* Summary cards */}
-      <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-5">
-        {[
-          { label: 'Pendientes', value: summary.pendientes, color: 'text-amber-600' },
-          { label: 'En proceso', value: summary.enProceso, color: 'text-blue-600' },
-          { label: 'Listos', value: summary.listos, color: 'text-green-600' },
-          { label: 'Entregados', value: summary.entregados, color: 'text-emerald-600' },
-          { label: 'Saldo pendiente', value: formatCurrency(summary.saldoTotal), color: 'text-red-600', large: true },
-        ].map((card) => (
-          <div key={card.label} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-            <p className="text-xs font-medium uppercase tracking-wider text-gray-400">{card.label}</p>
-            <p className={`mt-1 text-2xl font-bold ${card.color}`}>{card.value}</p>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+        <MetricCard icon={Clock} label="Pendientes" value={summary.pendientes} color="amber" />
+        <MetricCard icon={Wrench} label="En proceso" value={summary.enProceso} color="blue" />
+        <MetricCard icon={Package} label="Listos" value={summary.listos} color="green" />
+        <MetricCard icon={CheckCircle} label="Entregados" value={summary.entregados} color="green" />
+        <MetricCard icon={DollarSign} label="Saldo pendiente" value={formatCurrency(summary.saldoTotal)} color="red" />
       </div>
 
       {/* Search & filter */}
@@ -854,7 +837,7 @@ export default function PedidosPersonalizados() {
               </div>
               <div>
                 <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Estado</p>
-                <p className="mt-1"><EstadoBadge estado={detalleTarget.estado} /></p>
+                <p className="mt-1"><Badge status={detalleTarget.estado} /></p>
               </div>
             </div>
 
@@ -984,6 +967,6 @@ export default function PedidosPersonalizados() {
         confirmText="Cancelar pedido"
         loading={cancelLoading}
       />
-    </motion.div>
+    </div>
   )
 }

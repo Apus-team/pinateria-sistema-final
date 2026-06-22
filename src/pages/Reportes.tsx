@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabaseClient'
-import {
+import type {
   DashboardResumen,
   HistorialVentaView,
   InventarioView,
@@ -10,6 +10,8 @@ import {
   ProductoMasVendido,
 } from '../types/database'
 import toast from 'react-hot-toast'
+import PageHeader from '../components/ui/PageHeader'
+import Button from '../components/ui/Button'
 import {
   BarChart3,
   TrendingUp,
@@ -354,13 +356,11 @@ export default function Reportes() {
   ]
 
   return (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Reportes</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Consulta indicadores de ventas, inventario, clientes y pedidos personalizados.
-        </p>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Reportes"
+        subtitle="Consulta indicadores de ventas, inventario, clientes y pedidos personalizados."
+      />
 
       {/* Filters */}
       <div className="mb-6 flex flex-wrap items-end gap-3 rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
@@ -382,22 +382,12 @@ export default function Reportes() {
             className="rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition-colors focus:border-fucsia-400 focus:ring-2 focus:ring-fucsia-100"
           />
         </div>
-        <button
-          type="button"
-          onClick={aplicarFiltros}
-          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-fucsia-500 to-morado-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:from-fucsia-600 hover:to-morado-700"
-        >
-          <Filter className="h-4 w-4" />
+        <Button icon={<Filter className="h-4 w-4" />} onClick={aplicarFiltros}>
           Aplicar filtros
-        </button>
-        <button
-          type="button"
-          onClick={limpiarFiltros}
-          className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
-        >
-          <RotateCcw className="h-4 w-4" />
+        </Button>
+        <Button variant="secondary" icon={<RotateCcw className="h-4 w-4" />} onClick={limpiarFiltros}>
           Limpiar
-        </button>
+        </Button>
         {filtrosAplicados && (
           <span className="text-xs text-gray-400">
             Mostrando datos desde {fechaInicio || 'siempre'} hasta {fechaFin || 'siempre'}
@@ -521,7 +511,7 @@ export default function Reportes() {
           </Section>
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }
 
