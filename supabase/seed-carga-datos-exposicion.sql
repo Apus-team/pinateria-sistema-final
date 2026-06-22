@@ -1,6 +1,6 @@
 -- ============================================================================
 -- CARGA DE DATOS PARA EXPOSICIÓN ACADÉMICA — PIÑATERÍA FAMILIAR
--- Versión: 1.0.0
+-- Versión: 1.1.0
 -- Fecha: Junio 2026
 -- Descripción: Datos realistas para alimentar Dashboard, Reportes y todos los
 --              módulos del sistema durante la exposición académica.
