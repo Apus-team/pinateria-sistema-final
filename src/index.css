@@ -2,11 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  @apply transition-colors duration-300;
+}
+
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: #f8fafc;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark body {
+  background-color: #0f172a;
 }
 
 @layer base {
@@ -19,7 +27,43 @@ body {
   input[type='date'],
   select,
   textarea {
-    @apply w-full rounded-xl border border-gray-200 bg-white py-2.5 text-sm text-gray-900 outline-none transition-all placeholder:text-gray-400 focus:border-fucsia-300 focus:ring-2 focus:ring-fucsia-100;
+    @apply w-full rounded-xl border border-gray-200 bg-white py-2.5 text-sm text-gray-900 outline-none transition-all focus:border-fucsia-300 focus:ring-2 focus:ring-fucsia-100;
+  }
+
+  input[type='text']::placeholder,
+  input[type='email']::placeholder,
+  input[type='password']::placeholder,
+  input[type='number']::placeholder,
+  input[type='tel']::placeholder,
+  input[type='url']::placeholder,
+  input[type='date']::placeholder,
+  select::placeholder,
+  textarea::placeholder {
+    color: #9ca3af;
+  }
+
+  .dark input[type='text'],
+  .dark input[type='email'],
+  .dark input[type='password'],
+  .dark input[type='number'],
+  .dark input[type='tel'],
+  .dark input[type='url'],
+  .dark input[type='date'],
+  .dark select,
+  .dark textarea {
+    @apply border-gray-700 bg-gray-800 text-gray-100;
+  }
+
+  .dark input[type='text']::placeholder,
+  .dark input[type='email']::placeholder,
+  .dark input[type='password']::placeholder,
+  .dark input[type='number']::placeholder,
+  .dark input[type='tel']::placeholder,
+  .dark input[type='url']::placeholder,
+  .dark input[type='date']::placeholder,
+  .dark select::placeholder,
+  .dark textarea::placeholder {
+    color: #6b7280;
   }
 
   select {
@@ -38,6 +82,10 @@ body {
     @apply overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm;
   }
 
+  .dark .table-container {
+    @apply border-gray-700 bg-gray-900;
+  }
+
   .table-container table {
     @apply w-full text-sm;
   }
@@ -46,19 +94,41 @@ body {
     @apply border-b border-gray-50 bg-gray-50/50;
   }
 
+  .dark .table-container thead {
+    @apply border-gray-700 bg-gray-800/50;
+  }
+
   .table-container th {
-    @apply whitespace-nowrap px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500;
+    @apply whitespace-nowrap px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider;
+    color: #6b7280;
+  }
+
+  .dark .table-container th {
+    color: #9ca3af;
   }
 
   .table-container tbody {
     @apply divide-y divide-gray-50;
   }
 
+  .dark .table-container tbody {
+    @apply divide-gray-800;
+  }
+
   .table-container td {
-    @apply whitespace-nowrap px-4 py-3.5 text-sm text-gray-700;
+    @apply whitespace-nowrap px-4 py-3.5 text-sm;
+    color: #374151;
+  }
+
+  .dark .table-container td {
+    color: #d1d5db;
   }
 
   .table-container tbody tr {
     @apply transition-colors hover:bg-fucsia-50/30;
+  }
+
+  .dark .table-container tbody tr {
+    @apply hover:bg-gray-800/50;
   }
 }

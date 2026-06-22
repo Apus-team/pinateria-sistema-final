@@ -35,6 +35,7 @@ import KpiCard from '../components/dashboard/KpiCard'
 import DashboardChartCard from '../components/dashboard/DashboardChartCard'
 import SimpleEmptyState from '../components/dashboard/SimpleEmptyState'
 import AlertCard from '../components/dashboard/AlertCard'
+import useTheme from '../hooks/useTheme.tsx'
 
 function formatCurrency(value: unknown): string {
   const numberValue = Number(value || 0)
@@ -364,6 +365,7 @@ function buildAlerts(
 }
 
 export default function Dashboard() {
+  const { isDark } = useTheme()
   const [resumen, setResumen] = useState<DashboardResumen | null>(null)
   const [ventas, setVentas] = useState<HistorialVentaView[]>([])
   const [inventario, setInventario] = useState<InventarioView[]>([])
@@ -493,21 +495,21 @@ export default function Dashboard() {
       >
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <span className="inline-flex items-center gap-1 rounded-full bg-fucsia-100 px-3 py-1 text-xs font-medium text-fucsia-700">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+            <span className="inline-flex items-center gap-1 rounded-full bg-fucsia-100 px-3 py-1 text-xs font-medium text-fucsia-700 dark:bg-fucsia-900/40 dark:text-fucsia-300">
               <TrendingUp className="h-3 w-3" />
               En vivo
             </span>
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             Resumen general del estado de tu piñatería
           </p>
-          <p className="mt-0.5 text-xs text-gray-400">
+          <p className="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
             Indicadores actualizados en tiempo real desde Supabase
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-2 text-sm text-gray-500 sm:flex">
+          <div className="hidden items-center gap-2 text-sm text-gray-500 sm:flex dark:text-gray-400">
             <Calendar className="h-4 w-4" />
             {todayStr}
           </div>
@@ -587,12 +589,12 @@ export default function Dashboard() {
           {hasSalesData ? (
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={salesByDay}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#f0f0f0'} />
                 <XAxis dataKey="fecha" tick={{ fontSize: 12 }} stroke="#9ca3af" />
                 <YAxis tick={{ fontSize: 12 }} stroke="#9ca3af" />
                 <Tooltip
                   formatter={(value) => [formatCurrency(value), 'Total']}
-                  contentStyle={{ borderRadius: 12, border: '1px solid #e5e7eb' }}
+                  contentStyle={{ borderRadius: 12, border: isDark ? '1px solid #374151' : '1px solid #e5e7eb', background: isDark ? '#1f2937' : '#fff', color: isDark ? '#f3f4f6' : undefined }}
                 />
                 <Bar dataKey="total" fill="#a855f7" radius={[6, 6, 0, 0]} />
               </BarChart>
@@ -608,21 +610,21 @@ export default function Dashboard() {
             <div className="space-y-4">
               <ResponsiveContainer width="100%" height={180}>
                 <BarChart data={paymentMethods} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                  <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#f0f0f0'} />
                   <XAxis type="number" tick={{ fontSize: 12 }} stroke="#9ca3af" />
                   <YAxis dataKey="name" type="category" tick={{ fontSize: 12 }} stroke="#9ca3af" width={90} />
                   <Tooltip
                     formatter={(value) => [value, 'Cantidad']}
-                    contentStyle={{ borderRadius: 12, border: '1px solid #e5e7eb' }}
+                    contentStyle={{ borderRadius: 12, border: isDark ? '1px solid #374151' : '1px solid #e5e7eb', background: isDark ? '#1f2937' : '#fff', color: isDark ? '#f3f4f6' : undefined }}
                   />
                   <Bar dataKey="cantidad" fill="#ec4899" radius={[0, 6, 6, 0]} />
                 </BarChart>
               </ResponsiveContainer>
               <div className="grid grid-cols-2 gap-2">
                 {paymentMethods.map((pm) => (
-                  <div key={pm.name} className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2 text-xs">
-                    <span className="font-medium text-gray-600">{pm.name}</span>
-                    <span className="text-gray-900">{formatCurrency(pm.total)}</span>
+                  <div key={pm.name} className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2 text-xs dark:bg-gray-800">
+                    <span className="font-medium text-gray-600 dark:text-gray-300">{pm.name}</span>
+                    <span className="text-gray-900 dark:text-gray-100">{formatCurrency(pm.total)}</span>
                   </div>
                 ))}
               </div>
@@ -636,20 +638,16 @@ export default function Dashboard() {
         <DashboardChartCard title="Estado del inventario" delay={0.3}>
           {hasInventoryData ? (
             <div className="flex flex-col items-center">
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
                   <Pie
                     data={inventoryStatus}
                     cx="50%"
                     cy="50%"
-                    innerRadius={55}
-                    outerRadius={80}
+                    innerRadius={60}
+                    outerRadius={90}
                     paddingAngle={3}
                     dataKey="value"
-                    label={(entry: { name?: string; percent?: number }) =>
-                      `${entry.name ?? ''} ${((entry.percent ?? 0) * 100).toFixed(0)}%`
-                    }
-                    labelLine={false}
                   >
                     {inventoryStatus.map((entry, idx) => (
                       <Cell key={`cell-${idx}`} fill={entry.color} />
@@ -657,15 +655,15 @@ export default function Dashboard() {
                   </Pie>
                   <Tooltip
                     formatter={(value) => [value, 'Productos']}
-                    contentStyle={{ borderRadius: 12, border: '1px solid #e5e7eb' }}
+                    contentStyle={{ borderRadius: 12, border: isDark ? '1px solid #374151' : '1px solid #e5e7eb', background: isDark ? '#1f2937' : '#fff', color: isDark ? '#f3f4f6' : undefined }}
                   />
                 </PieChart>
               </ResponsiveContainer>
-              <div className="mt-2 flex flex-wrap justify-center gap-3">
+              <div className="mt-3 flex flex-wrap justify-center gap-4">
                 {inventoryStatus.map((item) => (
-                  <div key={item.name} className="flex items-center gap-1.5 text-xs text-gray-600">
+                  <div key={item.name} className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
                     <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
-                    {item.name}: {item.value}
+                    {item.name}: <span className="font-medium text-gray-800 dark:text-gray-200">{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -683,12 +681,12 @@ export default function Dashboard() {
           {hasOrderData ? (
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={orderStatus} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? '#374151' : '#f0f0f0'} />
                 <XAxis type="number" tick={{ fontSize: 12 }} stroke="#9ca3af" />
                 <YAxis dataKey="name" type="category" tick={{ fontSize: 12 }} stroke="#9ca3af" width={100} />
                 <Tooltip
                   formatter={(value) => [value, 'Pedidos']}
-                  contentStyle={{ borderRadius: 12, border: '1px solid #e5e7eb' }}
+                  contentStyle={{ borderRadius: 12, border: isDark ? '1px solid #374151' : '1px solid #e5e7eb', background: isDark ? '#1f2937' : '#fff', color: isDark ? '#f3f4f6' : undefined }}
                 />
                 <Bar dataKey="cantidad" radius={[0, 6, 6, 0]}>
                   {orderStatus.map((entry, idx) => {
@@ -717,18 +715,18 @@ export default function Dashboard() {
               {topProducts.map((p, idx) => (
                 <div
                   key={p.nombre}
-                  className="flex items-center justify-between rounded-xl border border-gray-50 bg-gray-50/50 p-3"
+                  className="flex items-center justify-between rounded-xl border border-gray-50 bg-gray-50/50 p-3 dark:border-gray-800 dark:bg-gray-800/50"
                 >
                   <div className="flex items-center gap-3">
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-fucsia-500 to-morado-500 text-xs font-bold text-white">
                       {idx + 1}
                     </span>
                     <div>
-                      <p className="text-sm font-medium text-gray-800">{p.nombre}</p>
-                      <p className="text-xs text-gray-400">{p.cantidad_vendida} vendidos</p>
+                      <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{p.nombre}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500">{p.cantidad_vendida} vendidos</p>
                     </div>
                   </div>
-                  <p className="text-sm font-semibold text-gray-700">
+                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                     {formatCurrency(p.ingreso_generado)}
                   </p>
                 </div>
@@ -753,18 +751,18 @@ export default function Dashboard() {
               {frequentClients.map((c) => (
                 <div
                   key={c.nombre}
-                  className="flex items-center justify-between rounded-xl border border-gray-50 bg-gray-50/50 p-3"
+                  className="flex items-center justify-between rounded-xl border border-gray-50 bg-gray-50/50 p-3 dark:border-gray-800 dark:bg-gray-800/50"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-yellow-500">
                       <Star className="h-4 w-4 text-white" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-800">{c.nombre}</p>
-                      <p className="text-xs text-gray-400">{c.cantidad_compras} compra(s)</p>
+                      <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{c.nombre}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500">{c.cantidad_compras} compra(s)</p>
                     </div>
                   </div>
-                  <p className="text-sm font-semibold text-gray-700">
+                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                     {formatCurrency(c.total_compras)}
                   </p>
                 </div>

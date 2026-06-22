@@ -26,14 +26,14 @@ export default function FormModal({ isOpen, onClose, title, children, size = 'md
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 10 }}
         transition={{ duration: 0.2 }}
-        className={`w-full ${widthClass} rounded-2xl bg-white shadow-xl shadow-gray-200/50 ring-1 ring-gray-100`}
+        className={`w-full ${widthClass} rounded-2xl bg-white shadow-xl shadow-gray-200/50 ring-1 ring-gray-100 dark:bg-gray-900 dark:shadow-gray-900/50 dark:ring-gray-700`}
       >
-        <div className="flex items-center justify-between border-b border-gray-50 px-6 py-4">
-          <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
+        <div className="flex items-center justify-between border-b border-gray-50 px-6 py-4 dark:border-gray-800">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{title}</h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+            className="rounded-xl p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
           >
             <X className="h-5 w-5" />
           </button>
