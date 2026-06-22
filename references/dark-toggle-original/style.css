@@ -1,0 +1,337 @@
+:root {
+  /* Global Page Theme */
+  --bg-color: #e2e8f0;
+  --transition-speed: 0.6s;
+
+  --toggle-width: 140px;
+  --toggle-height: 60px;
+  --bezel-padding: 5px;
+
+  /* Calculated Dimensions */
+  --track-width: calc(var(--toggle-width) - (var(--bezel-padding) * 2));
+  --track-height: calc(var(--toggle-height) - (var(--bezel-padding) * 2));
+  --orb-size: calc(var(--track-height) - 10px);
+  --orb-offset: 5px;
+  --orb-travel: calc(
+    var(--track-width) - var(--orb-size) - (var(--orb-offset) * 2)
+  );
+  --stretch-amount: 12px;
+
+  /* Colors - Light Theme */
+  --track-bg-light: #4ba5f8;
+  --orb-bg-light: #fbbf24;
+  --orb-glow-light: rgba(251, 191, 36, 0.7);
+
+  /* Colors - Dark Theme */
+  --track-bg-dark: #12121f;
+  --orb-bg-dark: #e2e8f0;
+  --orb-glow-dark: rgba(226, 232, 240, 0.3);
+}
+
+body.dark-mode {
+  --bg-color: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  transition: background-color var(--transition-speed) ease;
+  font-family: system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  cursor: pointer;
+  border-radius: 999px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.1),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8);
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  transition: all var(--transition-speed) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.dark-mode .theme-switch {
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, #2a2a35, #15151c);
+}
+
+.theme-switch__input {
+  appearance: none;
+  position: absolute;
+  opacity: 0;
+}
+
+.theme-switch__track {
+  position: absolute;
+  top: var(--bezel-padding);
+  left: var(--bezel-padding);
+  width: var(--track-width);
+  height: var(--track-height);
+  border-radius: 999px;
+  background-color: var(--track-bg-light);
+  overflow: hidden;
+  box-shadow: inset 0 5px 12px rgba(0, 0, 0, 0.25);
+  transition: background-color var(--transition-speed) ease;
+}
+
+.theme-switch__input:checked ~ .theme-switch__track {
+  background-color: var(--track-bg-dark);
+}
+
+/* =========================================
+            Orb (Sun / Moon)
+   ========================================= */
+.theme-switch__orb {
+  position: absolute;
+  top: var(--orb-offset);
+  left: var(--orb-offset);
+  width: var(--orb-size);
+  height: var(--orb-size);
+  border-radius: 50%;
+  background-color: var(--orb-bg-light);
+  box-shadow:
+    inset -4px -4px 8px rgba(180, 83, 9, 0.5),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.8),
+    0 0 20px var(--orb-glow-light);
+  transition:
+    transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+    width 0.4s ease,
+    background-color var(--transition-speed) ease;
+  z-index: 20;
+}
+
+.theme-switch__input:checked ~ .theme-switch__track .theme-switch__orb {
+  transform: translateX(var(--orb-travel)) rotate(360deg);
+  background-color: var(--orb-bg-dark);
+  box-shadow:
+    inset -3px -3px 6px rgba(0, 0, 0, 0.3),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.8),
+    0 0 15px var(--orb-glow-dark);
+}
+
+.theme-switch__input:active ~ .theme-switch__track .theme-switch__orb {
+  width: calc(var(--orb-size) + var(--stretch-amount));
+}
+
+.theme-switch__input:checked:active ~ .theme-switch__track .theme-switch__orb {
+  transform: translateX(calc(var(--orb-travel) - var(--stretch-amount)))
+    rotate(360deg);
+}
+
+.crater {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.crater--1 {
+  top: 20%;
+  left: 20%;
+  width: 25%;
+  height: 25%;
+}
+
+.crater--2 {
+  bottom: 25%;
+  right: 20%;
+  width: 15%;
+  height: 15%;
+}
+
+.crater--3 {
+  top: 40%;
+  right: 35%;
+  width: 10%;
+  height: 10%;
+}
+
+.theme-switch__input:checked ~ .theme-switch__track .crater {
+  opacity: 1;
+}
+
+.theme-switch__clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition:
+    transform var(--transition-speed) ease,
+    opacity 0.4s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  z-index: 10;
+}
+
+.cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 50px;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.cloud--1 {
+  width: 35px;
+  height: 12px;
+  bottom: 15%;
+  right: 10%;
+  animation: cloud-float 4s ease-in-out infinite;
+}
+
+.cloud--1::before {
+  width: 18px;
+  height: 18px;
+  top: -10px;
+  left: 6px;
+}
+
+.cloud--1::after {
+  width: 12px;
+  height: 12px;
+  top: -5px;
+  right: 4px;
+}
+
+.cloud--2 {
+  width: 25px;
+  height: 10px;
+  bottom: 30%;
+  left: 35%;
+  opacity: 0.7;
+  animation: cloud-float 5s ease-in-out infinite reverse;
+}
+
+.cloud--2::before {
+  width: 14px;
+  height: 14px;
+  top: -8px;
+  left: 4px;
+}
+
+.cloud--2::after {
+  width: 10px;
+  height: 10px;
+  top: -4px;
+  right: 3px;
+}
+
+.theme-switch__input:checked ~ .theme-switch__track .theme-switch__clouds {
+  transform: translateY(40px);
+  opacity: 0;
+}
+
+/* Night Stars */
+.theme-switch__stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all var(--transition-speed) ease;
+}
+
+.theme-switch__stars::before,
+.theme-switch__stars::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.theme-switch__stars::before {
+  width: 2px;
+  height: 2px;
+  box-shadow:
+    20px 10px #fff,
+    40px 25px rgba(255, 255, 255, 0.6),
+    75px 12px #fff;
+  animation: twinkle 3s infinite alternate;
+}
+
+.theme-switch__input:checked ~ .theme-switch__track .theme-switch__stars {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Shooting Star */
+.shooting-star {
+  position: absolute;
+  top: 15%;
+  right: 20%;
+  width: 35px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #fff);
+  transform: rotate(-45deg) translateX(100px);
+  opacity: 0;
+}
+
+.theme-switch__input:checked ~ .theme-switch__track .shooting-star {
+  animation: shoot 5s infinite 2s;
+}
+
+/* Animations */
+@keyframes cloud-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shoot {
+  0% {
+    transform: rotate(-45deg) translateX(80px);
+    opacity: 0;
+  }
+
+  5% {
+    transform: rotate(-45deg) translateX(0px);
+    opacity: 1;
+  }
+
+  10% {
+    transform: rotate(-45deg) translateX(-80px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotate(-45deg) translateX(-80px);
+    opacity: 0;
+  }
+}

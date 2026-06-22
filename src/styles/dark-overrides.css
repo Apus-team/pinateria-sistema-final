@@ -1,0 +1,11 @@
+/* Dark mode text overrides */
+.dark .text-gray-500 { color: #9ca3af !important; }
+.dark .text-gray-600 { color: #9ca3af !important; }
+.dark .text-gray-700 { color: #d1d5db !important; }
+.dark .text-gray-800 { color: #f3f4f6 !important; }
+.dark .text-gray-900 { color: #f9fafb !important; }
+.dark .text-gray-400 { color: #9ca3af !important; }
+.dark .text-gray-300 { color: #d1d5db !important; }
+.dark .divide-gray-100 > * + * { border-color: #374151 !important; }
+.dark .border-gray-100 { border-color: #374151 !important; }
+.dark .border-gray-200 { border-color: #374151 !important; }

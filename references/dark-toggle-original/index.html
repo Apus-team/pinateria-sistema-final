@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>FEZ-darkmode-toggle</title>
+</head>
+
+<body>
+
+    <label class="theme-switch" for="theme-toggle">
+        <input type="checkbox" id="theme-toggle" class="theme-switch__input">
+
+        <div class="theme-switch__track">
+            <!-- Night Elements -->
+            <div class="theme-switch__stars"></div>
+            <div class="shooting-star"></div>
+
+            <!-- Day Elements -->
+            <div class="theme-switch__clouds">
+                <div class="cloud cloud--1"></div>
+                <div class="cloud cloud--2"></div>
+            </div>
+
+            <!-- Sun/Moon Orb -->
+            <div class="theme-switch__orb">
+                <div class="crater crater--1"></div>
+                <div class="crater crater--2"></div>
+                <div class="crater crater--3"></div>
+            </div>
+        </div>
+    </label>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('theme-toggle');
+            const saved = localStorage.getItem('theme');
+            const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (saved === 'dark' || (!saved && sysDark)) {
+                toggle.checked = true;
+                document.body.classList.add('dark-mode');
+            }
+
+            toggle.addEventListener('change', () => {
+                const isDark = toggle.checked;
+                document.body.classList.toggle('dark-mode', isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+
+</html>

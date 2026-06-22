@@ -15,6 +15,7 @@ Sistema web para la gestión de ventas, inventario y pedidos personalizados de u
 | Framer Motion    | Animaciones                  |
 | Lucide React     | Iconos                       |
 | React Hot Toast  | Notificaciones               |
+| Recharts         | Gráficos del Dashboard       |
 
 ## Cómo ejecutar localmente
 
@@ -88,4 +89,16 @@ El proyecto está preparado para desplegarse en **Vercel**. Conectar el reposito
 
 ## Rama actual
 
-`release/1.0.0`
+`release/1.1.0`
+
+## Mejoras de la versión 1.1.0
+
+- Dashboard mejorado con gráficos e indicadores visuales (Recharts)
+- Carga de datos realistas para exposición académica
+- Mejora visual general en tablas, tarjetas, modales, badges y layout
+- Soporte para imágenes de productos mediante `imagen_url`
+- Dark mode toggle animado con modo claro/oscuro persistente
+- Correcciones visuales en Login, Register, formularios y detalle de registros
+- Componentes UI reutilizables (Button, Card, Badge, MetricCard, PageHeader, etc.)
+- Toggle de tema integrado en el Header con diseño consistente
+- Overrides globales de color para modo oscuro sin romper estilos existentes

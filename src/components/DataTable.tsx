@@ -1,3 +1,5 @@
+import { Loader2, Inbox } from 'lucide-react'
+
 interface Column<T> {
   key: string
   header: string
@@ -22,41 +24,42 @@ export default function DataTable<T>({
 }: DataTableProps<T>) {
   if (loading) {
     return (
-      <div className="rounded-xl border border-gray-100 bg-white p-8 text-center">
-        <p className="text-sm text-gray-400">Cargando...</p>
+      <div className="flex items-center justify-center rounded-2xl border border-gray-100 bg-white p-12 dark:border-gray-800 dark:bg-gray-900">
+        <div className="flex flex-col items-center gap-3 text-gray-400 dark:text-gray-500">
+          <Loader2 className="h-6 w-6 animate-spin" />
+          <p className="text-sm">Cargando datos...</p>
+        </div>
       </div>
     )
   }
 
   if (!data.length) {
     return (
-      <div className="rounded-xl border border-gray-100 bg-white p-8 text-center">
-        <p className="text-sm text-gray-400">{emptyMessage}</p>
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-12 text-center dark:border-gray-700 dark:bg-gray-900">
+        <Inbox className="mb-3 h-10 w-10 text-gray-300 dark:text-gray-600" />
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{emptyMessage}</p>
       </div>
     )
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+    <div className="table-container">
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table>
           <thead>
-            <tr className="border-b border-gray-100 bg-gray-50/80">
+            <tr>
               {columns.map((col) => (
-                <th
-                  key={col.key}
-                  className={`whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 ${col.className ?? ''}`}
-                >
+                <th key={col.key} className={col.className ?? ''}>
                   {col.header}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody>
             {data.map((item) => (
-              <tr key={keyExtractor(item)} className="transition-colors hover:bg-gray-50/50">
+              <tr key={keyExtractor(item)}>
                 {columns.map((col) => (
-                  <td key={col.key} className={`whitespace-nowrap px-4 py-3 text-gray-700 ${col.className ?? ''}`}>
+                  <td key={col.key} className={col.className ?? ''}>
                     {col.render ? col.render(item) : String((item as Record<string, unknown>)[col.key] ?? '')}
                   </td>
                 ))}

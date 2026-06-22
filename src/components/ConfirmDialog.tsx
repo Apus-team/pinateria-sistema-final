@@ -31,14 +31,14 @@ export default function ConfirmDialog({
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.2 }}
-        className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl"
+        className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-gray-900 dark:shadow-gray-900/50"
       >
         <div className="flex flex-col items-center text-center">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-            <AlertTriangle className="h-6 w-6 text-red-600" />
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40">
+            <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-300" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-          <p className="mt-2 text-sm text-gray-500">{message}</p>
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{title}</h3>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{message}</p>
         </div>
 
         <div className="mt-6 flex gap-3">
@@ -46,7 +46,7 @@ export default function ConfirmDialog({
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-60"
+            className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-60 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
           >
             {cancelText}
           </button>

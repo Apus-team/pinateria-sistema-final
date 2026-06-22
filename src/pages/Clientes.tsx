@@ -1,13 +1,15 @@
 import { useEffect, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabaseClient'
-import { ClienteFrecuenteView } from '../types/database'
+import type { ClienteFrecuenteView } from '../types/database'
 import toast from 'react-hot-toast'
-import { Plus, Pencil, Trash2, Eye, CircleCheck, XCircle } from 'lucide-react'
+import { Plus, Pencil, Trash2, Eye } from 'lucide-react'
 import DataTable from '../components/DataTable'
 import FormModal from '../components/FormModal'
 import ConfirmDialog from '../components/ConfirmDialog'
 import SearchInput from '../components/SearchInput'
+import PageHeader from '../components/ui/PageHeader'
+import Badge from '../components/ui/Badge'
+import Button from '../components/ui/Button'
 
 type FilterEstado = 'todos' | 'activos' | 'inactivos'
 
@@ -270,15 +272,9 @@ export default function Clientes() {
       header: 'Estado',
       render: (c: ClienteFrecuenteView) =>
         c.activo ? (
-          <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
-            <CircleCheck className="h-3 w-3" />
-            Activo
-          </span>
+          <Badge status="activo" />
         ) : (
-          <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
-            <XCircle className="h-3 w-3" />
-            Inactivo
-          </span>
+          <Badge status="inactivo" />
         ),
     },
     {
@@ -318,23 +314,15 @@ export default function Clientes() {
   ]
 
   return (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Clientes frecuentes</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Administra los datos de clientes y compradores habituales de la piñatería.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={openCreate}
-          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-fucsia-500 to-morado-600 px-4 py-2.5 text-sm font-medium text-white shadow-md shadow-fucsia-200 transition-all hover:from-fucsia-600 hover:to-morado-700"
-        >
-          <Plus className="h-4 w-4" />
+    <div className="space-y-6">
+      <PageHeader
+        title="Clientes"
+        subtitle="Administra los clientes registrados en la tienda."
+      >
+        <Button icon={<Plus className="h-4 w-4" />} onClick={openCreate}>
           Nuevo cliente
-        </button>
-      </div>
+        </Button>
+      </PageHeader>
 
       <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <SearchInput
@@ -473,17 +461,7 @@ export default function Clientes() {
               <div>
                 <p className="text-xs font-medium uppercase tracking-wider text-gray-400">Estado</p>
                 <p className="mt-1">
-                  {detailTarget.activo ? (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
-                      <CircleCheck className="h-3 w-3" />
-                      Activo
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
-                      <XCircle className="h-3 w-3" />
-                      Inactivo
-                    </span>
-                  )}
+                  {detailTarget.activo ? <Badge status="activo" /> : <Badge status="inactivo" />}
                 </p>
               </div>
             </div>
@@ -536,6 +514,6 @@ export default function Clientes() {
         message={`¿Estás seguro de desactivar al cliente "${deleteTarget?.nombre}"? Podrás reactivarlo después.`}
         confirmText="Desactivar"
       />
-    </motion.div>
+    </div>
   )
 }

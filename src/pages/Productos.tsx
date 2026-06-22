@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
 import { supabase } from '../lib/supabaseClient'
-import { ProductoView, Categoria } from '../types/database'
+import type { ProductoView, Categoria } from '../types/database'
 import toast from 'react-hot-toast'
 import { Plus, Pencil, Trash2, Settings2 } from 'lucide-react'
 import DataTable from '../components/DataTable'
@@ -10,6 +9,9 @@ import ConfirmDialog from '../components/ConfirmDialog'
 import StatusBadge from '../components/StatusBadge'
 import SearchInput from '../components/SearchInput'
 import CategoriasManager from '../components/CategoriasManager'
+import PageHeader from '../components/ui/PageHeader'
+import ProductImage from '../components/ui/ProductImage'
+import Button from '../components/ui/Button'
 
 const estadosValidos = ['disponible', 'agotado', 'descontinuado'] as const
 
@@ -241,6 +243,13 @@ export default function Productos() {
 
   const columns = [
     {
+      key: 'imagen',
+      header: '',
+      render: (p: ProductoView) => (
+        <ProductImage src={p.imagen_url} alt={p.nombre} width={44} height={44} className="h-11 w-11" />
+      ),
+    },
+    {
       key: 'codigo',
       header: 'Código',
       render: (p: ProductoView) => (
@@ -320,33 +329,18 @@ export default function Productos() {
   }
 
   return (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-800">Gestión de Productos</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Administra el catálogo de productos de la piñatería.
-          </p>
-        </div>
-        <div className="flex gap-3">
-          <button
-            type="button"
-            onClick={() => setCategoriasOpen(true)}
-            className="flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
-          >
-            <Settings2 className="h-4 w-4" />
-            Categorías
-          </button>
-          <button
-            type="button"
-            onClick={openCreate}
-            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-fucsia-500 to-morado-600 px-4 py-2.5 text-sm font-medium text-white shadow-md shadow-fucsia-200 transition-all hover:from-fucsia-600 hover:to-morado-700"
-          >
-            <Plus className="h-4 w-4" />
-            Nuevo producto
-          </button>
-        </div>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Gestión de Productos"
+        subtitle="Administra el catálogo de productos de la piñatería."
+      >
+        <Button variant="secondary" icon={<Settings2 className="h-4 w-4" />} onClick={() => setCategoriasOpen(true)}>
+          Categorías
+        </Button>
+        <Button icon={<Plus className="h-4 w-4" />} onClick={openCreate}>
+          Nuevo producto
+        </Button>
+      </PageHeader>
 
       <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <SearchInput
@@ -495,9 +489,14 @@ export default function Productos() {
                 type="url"
                 value={form.imagen_url}
                 onChange={(e) => updateForm('imagen_url', e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-fucsia-400 focus:ring-2 focus:ring-fucsia-100"
                 placeholder="https://ejemplo.com/imagen.jpg"
+                className="rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-fucsia-400 focus:ring-2 focus:ring-fucsia-100"
               />
+              {form.imagen_url && (
+                <div className="mt-2">
+                  <ProductImage src={form.imagen_url} alt="Vista previa" width={80} height={80} />
+                </div>
+              )}
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700">Estado</label>
@@ -516,20 +515,12 @@ export default function Productos() {
           </div>
 
           <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
-            <button
-              type="button"
-              onClick={() => setModalOpen(false)}
-              className="rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-            >
+            <Button variant="secondary" type="button" onClick={() => setModalOpen(false)}>
               Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="rounded-lg bg-gradient-to-r from-fucsia-500 to-morado-600 px-6 py-2.5 text-sm font-medium text-white shadow-md shadow-fucsia-200 transition-all hover:from-fucsia-600 hover:to-morado-700 disabled:opacity-60"
-            >
-              {saving ? 'Guardando...' : editingProducto ? 'Actualizar producto' : 'Registrar producto'}
-            </button>
+            </Button>
+            <Button type="submit" loading={saving}>
+              {editingProducto ? 'Actualizar producto' : 'Registrar producto'}
+            </Button>
           </div>
         </form>
       </FormModal>
@@ -548,6 +539,6 @@ export default function Productos() {
         onClose={() => setCategoriasOpen(false)}
         onUpdate={fetchData}
       />
-    </motion.div>
+    </div>
   )
 }
