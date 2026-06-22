@@ -27,18 +27,18 @@ export default function Header() {
   }
 
   return (
-    <header className="flex h-16 items-center justify-end gap-4 border-b border-gray-200 bg-white px-6">
-      <div className="flex items-center gap-2 text-sm text-gray-600">
-        <User className="h-4 w-4" />
-        <span>{email}</span>
+    <header className="flex h-16 items-center justify-end gap-4 border-b border-gray-100 bg-white px-6">
+      <div className="flex items-center gap-2 rounded-xl bg-gray-50 px-3 py-1.5 text-sm text-gray-600">
+        <User className="h-4 w-4 text-gray-400" />
+        <span className="font-medium">{email}</span>
       </div>
 
       <button
         onClick={handleLogout}
-        className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600"
+        className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-gray-500 transition-all hover:bg-red-50 hover:text-red-600"
       >
         <LogOut className="h-4 w-4" />
-        Cerrar sesión
+        <span className="hidden sm:inline">Cerrar sesión</span>
       </button>
     </header>
   )
