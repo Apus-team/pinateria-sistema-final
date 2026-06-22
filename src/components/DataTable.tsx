@@ -24,8 +24,8 @@ export default function DataTable<T>({
 }: DataTableProps<T>) {
   if (loading) {
     return (
-      <div className="flex items-center justify-center rounded-2xl border border-gray-100 bg-white p-12">
-        <div className="flex flex-col items-center gap-3 text-gray-400">
+      <div className="flex items-center justify-center rounded-2xl border border-gray-100 bg-white p-12 dark:border-gray-800 dark:bg-gray-900">
+        <div className="flex flex-col items-center gap-3 text-gray-400 dark:text-gray-500">
           <Loader2 className="h-6 w-6 animate-spin" />
           <p className="text-sm">Cargando datos...</p>
         </div>
@@ -35,9 +35,9 @@ export default function DataTable<T>({
 
   if (!data.length) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-12 text-center">
-        <Inbox className="mb-3 h-10 w-10 text-gray-300" />
-        <p className="text-sm font-medium text-gray-500">{emptyMessage}</p>
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-12 text-center dark:border-gray-700 dark:bg-gray-900">
+        <Inbox className="mb-3 h-10 w-10 text-gray-300 dark:text-gray-600" />
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{emptyMessage}</p>
       </div>
     )
   }

@@ -129,14 +129,14 @@ export default function CategoriasManager({ isOpen, onClose, onUpdate }: Categor
         initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.2 }}
-        className="flex max-h-[80vh] w-full max-w-lg flex-col rounded-xl bg-white shadow-xl"
+        className="flex max-h-[80vh] w-full max-w-lg flex-col rounded-xl bg-white shadow-xl dark:bg-gray-900 dark:shadow-gray-900/50"
       >
-        <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
-          <h2 className="text-lg font-semibold text-gray-800">Gestionar Categorías</h2>
+        <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 dark:border-gray-800">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Gestionar Categorías</h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+            className="rounded-lg p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
           >
             <X className="h-5 w-5" />
           </button>
@@ -146,23 +146,23 @@ export default function CategoriasManager({ isOpen, onClose, onUpdate }: Categor
           {formOpen ? (
             <form onSubmit={handleSave} className="space-y-4">
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">Nombre *</label>
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre *</label>
                 <input
                   type="text"
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
                   required
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-fucsia-400 focus:ring-2 focus:ring-fucsia-100"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-fucsia-400 focus:ring-2 focus:ring-fucsia-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                   placeholder="Nombre de la categoría"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">Descripción</label>
+                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción</label>
                 <textarea
                   value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
                   rows={3}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-fucsia-400 focus:ring-2 focus:ring-fucsia-100"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-fucsia-400 focus:ring-2 focus:ring-fucsia-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                   placeholder="Descripción opcional"
                 />
               </div>
@@ -170,7 +170,7 @@ export default function CategoriasManager({ isOpen, onClose, onUpdate }: Categor
                 <button
                   type="button"
                   onClick={() => setFormOpen(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
                 >
                   Cancelar
                 </button>
@@ -188,41 +188,41 @@ export default function CategoriasManager({ isOpen, onClose, onUpdate }: Categor
               <button
                 type="button"
                 onClick={openCreate}
-                className="mb-4 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-200 px-4 py-3 text-sm font-medium text-gray-500 transition-colors hover:border-fucsia-300 hover:text-fucsia-600"
+                className="mb-4 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-200 px-4 py-3 text-sm font-medium text-gray-500 transition-colors hover:border-fucsia-300 hover:text-fucsia-600 dark:border-gray-700 dark:text-gray-400 dark:hover:border-fucsia-600"
               >
                 <Plus className="h-4 w-4" />
                 Nueva categoría
               </button>
 
               {loading ? (
-                <p className="text-center text-sm text-gray-400">Cargando...</p>
+                <p className="text-center text-sm text-gray-400 dark:text-gray-500">Cargando...</p>
               ) : categorias.length === 0 ? (
-                <p className="text-center text-sm text-gray-400">No hay categorías registradas.</p>
+                <p className="text-center text-sm text-gray-400 dark:text-gray-500">No hay categorías registradas.</p>
               ) : (
                 <div className="space-y-2">
                   {categorias.map((cat) => (
                     <div
                       key={cat.id}
-                      className="flex items-center justify-between rounded-lg border border-gray-100 px-4 py-3"
+                      className="flex items-center justify-between rounded-lg border border-gray-100 px-4 py-3 dark:border-gray-800"
                     >
                       <div>
-                        <p className="text-sm font-medium text-gray-800">{cat.nombre}</p>
+                        <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{cat.nombre}</p>
                         {cat.descripcion && (
-                          <p className="text-xs text-gray-400">{cat.descripcion}</p>
+                          <p className="text-xs text-gray-400 dark:text-gray-500">{cat.descripcion}</p>
                         )}
                       </div>
                       <div className="flex gap-1">
                         <button
                           type="button"
                           onClick={() => openEdit(cat)}
-                          className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-fucsia-600"
+                          className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-fucsia-600 dark:hover:bg-gray-800 dark:hover:text-fucsia-400"
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleteTarget(cat)}
-                          className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                          className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/30 dark:hover:text-red-400"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>

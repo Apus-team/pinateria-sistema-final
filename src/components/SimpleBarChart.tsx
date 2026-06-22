@@ -20,10 +20,10 @@ export default function SimpleBarChart({ data, maxValue, formatValue }: SimpleBa
         return (
           <div key={item.label}>
             <div className="mb-1 flex items-center justify-between text-sm">
-              <span className="font-medium text-gray-700">{item.label}</span>
-              <span className="text-gray-500">{formatValue ? formatValue(item.value) : item.value}</span>
+              <span className="font-medium text-gray-700 dark:text-gray-300">{item.label}</span>
+              <span className="text-gray-500 dark:text-gray-400">{formatValue ? formatValue(item.value) : item.value}</span>
             </div>
-            <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100">
+            <div className="h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-700">
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{ width: `${pct}%`, backgroundColor: item.color ?? '#a855f7' }}

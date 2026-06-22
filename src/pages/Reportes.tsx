@@ -363,9 +363,9 @@ export default function Reportes() {
       />
 
       {/* Filters */}
-      <div className="mb-6 flex flex-wrap items-end gap-3 rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
+      <div className="mb-6 flex flex-wrap items-end gap-3 rounded-xl border border-gray-100 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
         <div>
-          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-gray-400">Fecha inicio</label>
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">Fecha inicio</label>
           <input
             type="date"
             value={fechaInicio}
@@ -374,7 +374,7 @@ export default function Reportes() {
           />
         </div>
         <div>
-          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-gray-400">Fecha fin</label>
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">Fecha fin</label>
           <input
             type="date"
             value={fechaFin}
@@ -519,10 +519,10 @@ export default function Reportes() {
 
 function SummaryCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: React.ComponentType<{ className?: string }>; color: string }) {
   return (
-    <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
+    <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wider text-gray-400">{label}</p>
+          <p className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">{label}</p>
           <p className={`mt-1 text-xl font-bold ${color}`}>{value}</p>
         </div>
         <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${color.replace('text-', 'bg-')} bg-opacity-10`}>
@@ -535,23 +535,23 @@ function SummaryCard({ label, value, icon: Icon, color }: { label: string; value
 
 function MetricCard({ label, value, color, highlight }: { label: string; value: string | number; color?: string; highlight?: boolean }) {
   return (
-    <div className={`rounded-lg border border-gray-100 px-4 py-3 ${highlight ? 'bg-fucsia-50 border-fucsia-200' : 'bg-white'}`}>
-      <p className="text-xs font-medium uppercase tracking-wider text-gray-400">{label}</p>
-      <p className={`mt-1 text-lg font-bold ${color ?? 'text-gray-800'}`}>{value}</p>
+    <div className={`rounded-lg border px-4 py-3 ${highlight ? 'border-fucsia-200 bg-fucsia-50 dark:border-fucsia-800 dark:bg-fucsia-900/30' : 'border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-900'}`}>
+      <p className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">{label}</p>
+      <p className={`mt-1 text-lg font-bold ${color ?? 'text-gray-800 dark:text-gray-100'}`}>{value}</p>
     </div>
   )
 }
 
 function Section({ icon: Icon, title, subtitle, children }: { icon: React.ComponentType<{ className?: string }>; title: string; subtitle?: string; children: React.ReactNode }) {
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
       <div className="mb-5 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-fucsia-500 to-morado-600 text-white">
           <Icon className="h-5 w-5" />
         </div>
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-          {subtitle && <p className="text-xs text-gray-400">{subtitle}</p>}
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{title}</h2>
+          {subtitle && <p className="text-xs text-gray-400 dark:text-gray-500">{subtitle}</p>}
         </div>
       </div>
       {children}

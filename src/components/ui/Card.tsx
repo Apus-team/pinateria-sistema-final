@@ -27,7 +27,7 @@ export default function Card({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay }}
-      className={`rounded-2xl border border-gray-100 bg-white shadow-sm ${paddings[padding]} ${hover ? 'transition-shadow hover:shadow-md' : ''} ${className}`}
+      className={`rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900 ${paddings[padding]} ${hover ? 'transition-shadow hover:shadow-md' : ''} ${className}`}
     >
       {children}
     </motion.div>
